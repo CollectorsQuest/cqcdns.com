@@ -1,0 +1,6 @@
+[submodule "iceAssetsPlugin"]
+	path = iceAssetsPlugin
+	url = git@github.com:CollectorsQuest/iceAssetsPlugin.git
+[submodule "iceBackendPlugin"]
+	path = iceBackendPlugin
+	url = git@github.com:CollectorsQuest/iceBackendPlugin.git
