@@ -4,3 +4,6 @@
 [submodule "iceBackendPlugin"]
 	path = iceBackendPlugin
 	url = git@github.com:CollectorsQuest/iceBackendPlugin.git
+[submodule "iceLibsPlugin"]
+	path = iceLibsPlugin
+	url = git@github.com:CollectorsQuest/iceLibsPlugin.git
