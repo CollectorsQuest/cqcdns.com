@@ -5,13 +5,21 @@ $_time_start = microtime(true);
 require dirname(__FILE__) .'/../iceLibsPlugin/lib/IceFunctions.class.php';
 require dirname(__FILE__) .'/../iceLibsPlugin/lib/IceStats.class.php';
 
-$cache    = true;
 $webdir   = realpath(dirname(__FILE__) .'/..');
 $cachedir = realpath($webdir .'/web/cache');
 $cssdir   = $webdir .'/css';
 $jsdir    = $webdir .'/js';
 
-$revision = intval($_GET['revision']);
+if (isset($_GET['revision']))
+{
+  $cache    = isset($_GET['cache']) ? (bool) $_GET['cache'] : true;
+  $revision = intval($_GET['revision']);
+}
+else
+{
+  $cache    = false;
+  $revision = rand(1, PHP_INT_MAX);
+}
 
 // Determine the directory and type we should use
 switch ($_GET['type'])
@@ -212,7 +220,7 @@ header ('Content-Type: text/' . $type);
 if (isset($encoding) && $encoding != 'none')
 {
   // Send compressed contents
-  $contents = gzencode($contents, 9, $gzip !== false ? FORCE_GZIP : FORCE_DEFLATE);
+  $contents = gzencode($contents, 9, isset($gzip) && $gzip !== false ? FORCE_GZIP : FORCE_DEFLATE);
 
   header ('Content-Encoding: '. $encoding);
   header ('Content-Length: '. strlen($contents));
@@ -228,7 +236,7 @@ else
 }
 
 // Store cache
-if ($cache)
+if (true === $cache && isset($cachefile))
 {
   file_put_contents($cachedir . '/' . $cachefile, $contents);
 }
